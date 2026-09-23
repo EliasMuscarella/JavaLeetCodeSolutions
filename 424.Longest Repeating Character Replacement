@@ -1,0 +1,38 @@
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int[] freq = new int[26];
+        int max = 0;
+        int l = 0;
+        int r = 0;
+        int maxFreq = 0;
+
+        while(r < s.length()){
+            //update the count of each letter
+            freq[s.charAt(r) - 'A']++;
+
+            //determine what the max count of a letter is
+            maxFreq = Math.max(maxFreq, freq[s.charAt(r) - 'A']);
+
+            //while the condition is not met increment l
+            while(r - l + 1 - maxFreq > k){
+                freq[s.charAt(l) - 'A']--;
+                l++;
+            }
+            
+            //calculate new max and increment r
+            max = Math.max(max, r - l + 1);
+            r++;
+        }
+
+        return max;
+    }
+
+    // Can carry a maxFreq int as every iteration the max freq is either what it was or the number we just updated
+    // public static int getMostFreq(int[] freqs){
+    //     int max = 0;
+    //     for(int el : freqs){
+    //         max = Math.max(el,max);
+    //     }
+    //     return max;
+    // }
+}
