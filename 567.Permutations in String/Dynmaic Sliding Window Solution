@@ -1,0 +1,42 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int [] chars = new int[26];
+        HashSet<Character> s1Chars = new HashSet<>();
+        int l = 0;
+        int r = 0;
+
+        for(char c : s1.toCharArray()){
+            chars[c-'a']++;
+            s1Chars.add(c);
+        }
+
+        while(r < s2.length()){
+            char c = s2.charAt(r);
+
+            if(chars[c-'a'] > 0){
+                chars[c-'a']--;
+                r++;
+            }
+            else if(!s1Chars.contains(c)){
+                while(l<r){
+                    chars[s2.charAt(l)-'a']++;
+                    l++;
+                }
+                l++;
+                r++;
+            }
+            else if(l < r){
+                chars[s2.charAt(l)-'a']++;
+                l++;
+            }else{
+                r++;
+            }
+
+            if(r-l== s1.length()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
