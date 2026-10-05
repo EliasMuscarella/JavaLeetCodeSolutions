@@ -1,0 +1,29 @@
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int[] result = new int[temperatures.length];
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        //for each temp remove all colder days and add the nun of days its been and then add the current day
+        for(int i = 0; i < temperatures.length; i++){
+            while(!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
+                int day = stack.pop();
+                result[day] = i - day;
+            }
+
+            stack.push(i);
+        }
+
+        //remove remaining days
+        while(!stack.isEmpty()){
+            int index = stack.pop();
+            result[index] = 0;
+        }
+
+        return result;
+    }
+}
+
+/*
+O(n) time complexity because its a simple linear loop through the array
+O(n) space complexity to hold the elements in the stack
+*/
