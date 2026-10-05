@@ -1,0 +1,31 @@
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int op1 = 0;
+        int op2 = 0;
+
+        for(String el : tokens){
+            if(el.equals("+")){
+                op2 = stack.pop();
+                op1 = stack.pop();
+                stack.push(op1 + op2);
+            }else if (el.equals("-")){
+                op2 = stack.pop();
+                op1 = stack.pop();
+                stack.push(op1 - op2);
+            }else if (el.equals("*")){
+                op2 = stack.pop();
+                op1 = stack.pop();
+                stack.push(op1 * op2);
+            }else if (el.equals("/")){
+                op2 = stack.pop();
+                op1 = stack.pop();
+                stack.push(op1 / op2);
+            }else{
+                stack.push(Integer.parseInt(el));
+            }
+        }
+
+        return stack.pop();
+    }
+}
