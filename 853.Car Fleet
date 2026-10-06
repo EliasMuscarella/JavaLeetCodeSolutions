@@ -1,0 +1,22 @@
+class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        int result = 0;
+        int [][] tuples = new int[position.length][2];
+
+        for(int i = 0; i< position.length;i++){
+            tuples[i][0] = position[i];
+            tuples[i][1] = speed[i];
+        }
+
+        Arrays.sort(tuples, (a,b) -> Double.compare(b[0],a[0]));
+
+        Deque<Double> stack = new ArrayDeque<>();
+        for(int i = 0; i < position.length;i++){
+            if(stack.isEmpty() || stack.peek() < (double)(target - tuples[i][0])/tuples[i][1]){
+                stack.push((double)(target - tuples[i][0]) / tuples[i][1]);
+            }
+        }
+
+        return stack.size();
+    }
+}
